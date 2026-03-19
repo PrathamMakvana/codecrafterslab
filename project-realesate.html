@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Systems | Codecrafters Lab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #f97316;
+            --accent: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-purple: #a855f7;
+            --accent-green: #10b981;
+            --accent-teal: #14b8a6;
+            --bg-dark: #0a0a0f;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --gradient-accent: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+            --gradient-warm: linear-gradient(135deg, #f97316 0%, #eab308 100%);
+            --glow-primary: 0 0 40px rgba(99, 102, 241, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* Aurora Background */
+        .aurora-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .aurora-gradient {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            top: -25%;
+            left: -25%;
+            background:
+                radial-gradient(ellipse at 18% 22%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 82% 18%, rgba(168, 85, 247, 0.16) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 22% 78%, rgba(6, 182, 212, 0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 78% 82%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            animation: auroraMove 28s ease-in-out infinite alternate;
+        }
+
+        @keyframes auroraMove {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            25% {
+                transform: translate(45px, -45px) rotate(4deg) scale(1.04);
+            }
+
+            50% {
+                transform: translate(-35px, 35px) rotate(-3deg) scale(0.96);
+            }
+
+            75% {
+                transform: translate(25px, 20px) rotate(5deg) scale(1.03);
+            }
+
+            100% {
+                transform: translate(-15px, -25px) rotate(-2deg) scale(1);
+            }
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(2px 2px at 25px 35px, rgba(255, 255, 255, 0.85), transparent),
+                radial-gradient(2px 2px at 60px 90px, rgba(255, 255, 255, 0.65), transparent),
+                radial-gradient(1px 1px at 110px 60px, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(2px 2px at 200px 160px, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 290px 100px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(2px 2px at 370px 190px, rgba(255, 255, 255, 0.75), transparent);
+            background-size: 600px 240px;
+            animation: twinkle 12s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.35;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(95px);
+            opacity: 0.32;
+            animation: orbFloat 30s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            top: -18%;
+            left: -12%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-green));
+            top: 40%;
+            right: -18%;
+            animation-delay: 10s;
+        }
+
+        .orb-3 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, var(--accent-pink), var(--secondary));
+            bottom: -12%;
+            left: 22%;
+            animation-delay: 20s;
+        }
+
+        @keyframes orbFloat {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            20% {
+                transform: translate(70px, -70px) scale(1.1);
+            }
+
+            40% {
+                transform: translate(-50px, 50px) scale(0.9);
+            }
+
+            60% {
+                transform: translate(40px, 40px) scale(1.06);
+            }
+
+            80% {
+                transform: translate(-30px, -40px) scale(0.94);
+            }
+        }
+
+        /* Particles */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 50%;
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-120px) translateX(120px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            background: rgba(10, 10, 15, 0.93);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 0;
+            background: rgba(10, 10, 15, 0.98);
+        }
+
+        .navbar-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary) !important;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin: 0 15px;
+            padding: 8px 0 !important;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary) !important;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-toggler {
+            border: 1px solid var(--border-color);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Hero Section */
+        .project-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 150px 0 100px;
+        }
+
+        .hero-image-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('./images/real-estate.jpg') center/cover no-repeat;
+            opacity: 0.13;
+            filter: blur(4px);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 10, 15, 0.65), rgba(10, 10, 15, 0.95));
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 75px 75px;
+            animation: gridPulse 14s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+
+            0%,
+            100% {
+                opacity: 0.35;
+            }
+
+            50% {
+                opacity: 0.75;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 980px;
+            padding: 0 20px;
+        }
+
+        .project-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 32px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--accent-teal);
+            margin-bottom: 35px;
+            backdrop-filter: blur(15px);
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        .project-badge i {
+            font-size: 1.15rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.8rem, 8vw, 5.8rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            letter-spacing: -2px;
+        }
+
+        .project-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .project-title .line span {
+            display: block;
+            transform: translateY(100%);
+            animation: slideUp 0.9s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+        }
+
+        .project-title .line:nth-child(2) span {
+            animation-delay: 0.15s;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .gradient-text {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-tagline {
+            font-size: 1.38rem;
+            color: var(--text-secondary);
+            max-width: 720px;
+            margin: 0 auto;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeIn 0.9s ease forwards 0.5s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.2s;
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+            margin-top: 20px;
+            animation: scrollLine 2s ease infinite;
+        }
+
+        @keyframes scrollLine {
+            0% {
+                transform: scaleY(0);
+                transform-origin: top;
+            }
+
+            50% {
+                transform: scaleY(1);
+                transform-origin: top;
+            }
+
+            51% {
+                transform-origin: bottom;
+            }
+
+            100% {
+                transform: scaleY(0);
+                transform-origin: bottom;
+            }
+        }
+
+        /* Content Section */
+        .section {
+            padding: 105px 0;
+            position: relative;
+        }
+
+        .section-dark {
+            background: rgba(0, 0, 0, 0.38);
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 75px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 75px;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 26px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent-teal);
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.65fr 1fr;
+            gap: 75px;
+        }
+
+        @media (max-width: 991px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.95;
+            margin-bottom: 30px;
+        }
+
+        .project-description strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Why Choose List */
+        .why-choose-list {
+            list-style: none;
+            padding: 0;
+            margin: 28px 0;
+        }
+
+        .why-choose-list li {
+            position: relative;
+            padding: 16px 0 16px 38px;
+            color: var(--text-secondary);
+            font-size: 1.06rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .why-choose-list li:last-child {
+            border-bottom: none;
+        }
+
+        .why-choose-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 26px;
+            height: 26px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .why-choose-list li:hover {
+            padding-left: 48px;
+            color: var(--text-primary);
+        }
+
+        .why-choose-list li strong {
+            color: var(--text-primary);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+        }
+
+        .sidebar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 42px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-card:hover {
+            border-color: var(--accent-teal);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(6, 182, 212, 0.25);
+        }
+
+        .sidebar-card:hover::before {
+            opacity: 1;
+        }
+
+        .sidebar-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.28rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tech-badge {
+            padding: 12px 24px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--accent-teal);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .tech-badge:hover {
+            background: var(--gradient-accent);
+            border-color: transparent;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+        }
+
+        .project-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .project-meta-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-meta-item:last-child {
+            border-bottom: none;
+        }
+
+        .project-meta-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .project-meta-value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .btn-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 20px 38px;
+            background: var(--gradient-accent);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 14px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 65px rgba(6, 182, 212, 0.5);
+            color: #fff;
+        }
+
+        .btn-cta:hover::before {
+            left: 100%;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            background: rgba(0, 0, 0, 0.48);
+        }
+
+        .main-carousel {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 28px 75px rgba(0, 0, 0, 0.55);
+            border: 1px solid var(--border-color);
+        }
+
+        .carousel-item img {
+            width: 100%;
+            max-height: 600px;
+            object-fit: contain;
+            background: #050508;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 68px;
+            height: 68px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 1;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);
+        }
+
+        .carousel-control-prev {
+            left: -95px;
+        }
+
+        .carousel-control-next {
+            right: -95px;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            transform: translateY(-50%) scale(1.14);
+        }
+
+        @media (max-width: 1350px) {
+
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 52px;
+                height: 52px;
+            }
+
+            .carousel-control-prev {
+                left: 22px;
+            }
+
+            .carousel-control-next {
+                right: 22px;
+            }
+        }
+
+        /* Thumbnails */
+        .thumbnail-container {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 30px 5px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-teal) var(--bg-dark);
+        }
+
+        .thumbnail-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .thumbnail-container::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+            border-radius: 10px;
+        }
+
+        .thumbnail-container::-webkit-scrollbar-thumb {
+            background: var(--accent-teal);
+            border-radius: 10px;
+        }
+
+        .thumbnail {
+            flex: 0 0 auto;
+            width: 135px;
+            height: 88px;
+            border-radius: 14px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.5;
+            transition: all 0.35s ease;
+            filter: grayscale(65%);
+        }
+
+        .thumbnail.active {
+            border-color: var(--accent-teal);
+            opacity: 1;
+            filter: grayscale(0%);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.4);
+            transform: scale(1.06);
+        }
+
+        .thumbnail:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.09);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 38px;
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--gradient-accent);
+            transition: height 0.45s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--accent-teal);
+            box-shadow: 0 20px 60px rgba(6, 182, 212, 0.25);
+        }
+
+        .feature-card:hover::before {
+            height: 100%;
+        }
+
+        .feature-icon {
+            width: 62px;
+            height: 62px;
+            background: var(--gradient-accent);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.55rem;
+            color: #fff;
+            margin-bottom: 24px;
+            transition: all 0.4s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.14) rotate(8deg);
+            box-shadow: 0 16px 42px rgba(6, 182, 212, 0.45);
+        }
+
+        .feature-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.22rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: 0.96rem;
+            line-height: 1.78;
+        }
+
+        /* Solutions Section */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 30px;
+            counter-reset: solution;
+        }
+
+        .solution-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 42px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.45s ease;
+            counter-increment: solution;
+        }
+
+        .solution-card::before {
+            content: counter(solution, decimal-leading-zero);
+            position: absolute;
+            top: 28px;
+            right: 32px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.2rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.03);
+            line-height: 1;
+            transition: all 0.4s ease;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-14px);
+            border-color: var(--accent-teal);
+            box-shadow: 0 20px 60px rgba(6, 182, 212, 0.25);
+        }
+
+        .solution-card:hover::before {
+            color: rgba(6, 182, 212, 0.12);
+        }
+
+        .solution-icon {
+            width: 58px;
+            height: 58px;
+            background: var(--gradient-accent);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+
+        .solution-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.28rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .solution-description {
+            color: var(--text-secondary);
+            line-height: 1.78;
+            font-size: 0.98rem;
+        }
+
+        /* Challenge Section */
+        .challenge-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(16, 185, 129, 0.08));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 24px;
+            padding: 48px;
+            margin-top: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .challenge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-accent);
+        }
+
+        .challenge-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.65rem;
+            font-weight: 600;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .challenge-card h3 i {
+            color: var(--accent-teal);
+            font-size: 1.45rem;
+        }
+
+        .challenge-card p {
+            color: var(--text-secondary);
+            font-size: 1.12rem;
+            line-height: 1.88;
+        }
+
+        /* Testimonial Section */
+        .testimonial-section {
+            background: rgba(0, 0, 0, 0.38);
+        }
+
+        .testimonial-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 65px;
+            text-align: center;
+            max-width: 920px;
+            margin: 0 auto;
+            position: relative;
+            backdrop-filter: blur(15px);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 32px;
+            left: 52px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 9.5rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.14;
+            line-height: 1;
+        }
+
+        .testimonial-text {
+            font-size: 1.28rem;
+            color: var(--text-secondary);
+            line-height: 1.98;
+            margin-bottom: 38px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-text strong {
+            color: var(--text-primary);
+        }
+
+        .testimonial-rating {
+            margin-bottom: 20px;
+        }
+
+        .testimonial-rating i {
+            color: #fbbf24;
+            font-size: 1.45rem;
+            margin: 0 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-rating:hover i {
+            transform: scale(1.28);
+        }
+
+        .testimonial-author {
+            color: var(--text-muted);
+            font-size: 1.02rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 105px 0;
+        }
+
+        .cta-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 28px;
+            padding: 75px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            animation: rotateBg 35s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cta-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.9rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-description {
+            color: var(--text-secondary);
+            font-size: 1.22rem;
+            margin-bottom: 38px;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 52px;
+            background: var(--gradient-accent);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.06rem;
+            border-radius: 60px;
+            transition: all 0.4s ease;
+            box-shadow: 0 15px 50px rgba(6, 182, 212, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 22px 65px rgba(6, 182, 212, 0.5);
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            padding: 75px 0 38px;
+            border-top: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-accent);
+            background-size: 200% 100%;
+            animation: gradientMove 4s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+
+        .footer-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 38px;
+        }
+
+        .footer-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+        }
+
+        .footer-nav a:hover {
+            color: var(--accent-teal);
+        }
+
+        .footer-nav a:hover::after {
+            width: 100%;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 18px;
+        }
+
+        .footer-social a {
+            width: 52px;
+            height: 52px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 1.22rem;
+            transition: all 0.35s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--gradient-accent);
+            border-color: transparent;
+            color: #fff;
+            transform: translateY(-5px) rotate(5deg);
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.3);
+        }
+
+        .footer-bottom {
+            margin-top: 52px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.96rem;
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 38px;
+            right: 38px;
+            width: 58px;
+            height: 58px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.35rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 999;
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(6, 182, 212, 0.5);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-teal);
+            border-radius: 10px;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--accent-teal);
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .project-title {
+                letter-spacing: -1px;
+            }
+
+            .section {
+                padding: 78px 0;
+            }
+
+            .testimonial-card {
+                padding: 42px 30px;
+            }
+
+            .testimonial-card::before {
+                font-size: 5.5rem;
+                top: 20px;
+                left: 28px;
+            }
+
+            .cta-card {
+                padding: 52px 32px;
+            }
+
+            .cta-title {
+                font-size: 2.2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Aurora Background -->
+    <div class="aurora-bg">
+        <div class="aurora-gradient"></div>
+        <div class="stars"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Particles Container -->
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Codecrafters Lab</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="project-hero">
+        <div class="hero-image-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-grid"></div>
+
+        <div class="hero-content">
+            <div class="project-badge" data-aos="fade-up">
+                <i class="fas fa-building"></i>
+                Real Estate Platform
+            </div>
+            <h1 class="project-title">
+                <span class="line"><span data-aos="fade-up" data-aos-delay="100"><span class="gradient-text">Real
+                            Estate</span> System</span></span>
+            </h1>
+            <p class="project-tagline" data-aos="fade-up" data-aos-delay="200">
+                Simplify property management — list smarter, sell faster, grow effortlessly with intelligent automation.
+            </p>
+        </div>
+
+        <div class="scroll-indicator">
+            Scroll
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="section">
+        <div class="container">
+            <div class="content-grid">
+                <div data-aos="fade-right">
+                    <h2 class="section-title">Project Overview</h2>
+
+                    <p class="project-description">
+                        <strong>RealEstate Pro</strong> is a comprehensive property management system designed to
+                        streamline
+                        <strong>the entire real estate lifecycle</strong> with innovative tools for <strong>listings
+                            management,
+                            client relations, transactions, and portfolio analytics</strong>.
+                    </p>
+
+                    <p class="project-description">
+                        Our platform empowers agencies and investors to maximize property value through
+                        <strong>automated workflows,
+                            market intelligence, and integrated buyer/seller portals</strong>. Built with scalability
+                        and efficiency in mind,
+                        it transforms how real estate professionals manage their business.
+                    </p>
+
+                    <p class="project-description"><strong>Why Choose RealEstate Pro?</strong></p>
+
+                    <ul class="why-choose-list" data-aos="fade-up">
+                        <li><strong>Market-Ready:</strong> Tailored for residential, commercial, and rental properties
+                            alike.</li>
+                        <li><strong>Client-Focused:</strong> Intuitive interfaces for agents, buyers, and property
+                            owners.</li>
+                        <li><strong>Data-Secure:</strong> Compliant with real estate regulations and privacy standards.
+                        </li>
+                    </ul>
+
+                    <p class="project-description">
+                        Transform your real estate business with <strong>RealEstate Pro</strong>—where smart technology
+                        meets property expertise.
+                    </p>
+
+                    <div class="challenge-card" data-aos="fade-up">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Client Challenge</h3>
+                        <p>
+                            Real estate professionals struggle with <strong>fragmented property management</strong>,
+                            facing challenges with
+                            <strong>manual processes</strong> and <strong>disconnected tools</strong> that lead to
+                            missed opportunities,
+                            inefficient workflows, and client dissatisfaction.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="sidebar" data-aos="fade-left">
+                    <div class="sidebar-card">
+                        <h4 class="sidebar-title">Technologies Used</h4>
+                        <div class="tech-badges">
+                            <span class="tech-badge">React.js</span>
+                            <span class="tech-badge">Laravel</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">jQuery</span>
+                            <span class="tech-badge">Ajax</span>
+                            <span class="tech-badge">Google Maps API</span>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h4 class="sidebar-title">Project Details</h4>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span class="project-meta-label">Team Size</span>
+                                <span class="project-meta-value">3 Developers, 1 Designer</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span class="project-meta-label">Duration</span>
+                                <span class="project-meta-value">14 Weeks</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span class="project-meta-label">Category</span>
+                                <span class="project-meta-value">Real Estate SaaS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="index.html#contact" class="btn-cta">
+                        Start Your Project
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section gallery-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-images"></i>
+                    Screenshots
+                </div>
+                <h2 class="section-title" style="text-align: center;">Project Gallery</h2>
+            </div>
+
+            <div class="gallery-wrapper" data-aos="fade-up">
+                <div class="main-carousel">
+                    <div id="projectSlider" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="carouselInner">
+                            <!-- Dynamic items -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#projectSlider"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#projectSlider"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="thumbnail-container" id="thumbnailContainer">
+                    <!-- Dynamic thumbnails -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-star"></i>
+                    Functionality
+                </div>
+                <h2 class="section-title" style="text-align: center;">Key Features</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                    <h3 class="feature-title">Smart Property Matching</h3>
+                    <p class="feature-description">AI-powered buyer/tenant recommendations based on preferences and
+                        behavior patterns.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="feature-icon"><i class="fas fa-vr-cardboard"></i></div>
+                    <h3 class="feature-title">Virtual Tour Integration</h3>
+                    <p class="feature-description">360° property views and immersive walkthroughs for remote viewing.
+                    </p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon"><i class="fas fa-calculator"></i></div>
+                    <h3 class="feature-title">Automated Valuation</h3>
+                    <p class="feature-description">Instant property price estimates using market analytics and
+                        comparables.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="250">
+                    <div class="feature-icon"><i class="fas fa-file-contract"></i></div>
+                    <h3 class="feature-title">Document Management</h3>
+                    <p class="feature-description">Secure digital storage for contracts, deeds, and compliance files.
+                    </p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon"><i class="fas fa-percent"></i></div>
+                    <h3 class="feature-title">Commission Calculator</h3>
+                    <p class="feature-description">Automated deal profitability analysis for agents and brokers.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="350">
+                    <div class="feature-icon"><i class="fas fa-user-circle"></i></div>
+                    <h3 class="feature-title">Client Portal</h3>
+                    <p class="feature-description">Self-service dashboard for buyers/sellers to track transactions.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="feature-title">Market Trends Dashboard</h3>
+                    <p class="feature-description">Real-time neighborhood pricing and demand analytics.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="450">
+                    <div class="feature-icon"><i class="fas fa-users-cog"></i></div>
+                    <h3 class="feature-title">Lead Management</h3>
+                    <p class="feature-description">Automated follow-ups and CRM integration for potential buyers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-lightbulb"></i>
+                    Approach
+                </div>
+                <h2 class="section-title" style="text-align: center;">Our Solution</h2>
+            </div>
+
+            <div class="solutions-grid">
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="solution-icon"><i class="fas fa-cogs"></i></div>
+                    <h3 class="solution-title">Automated Transactions</h3>
+                    <p class="solution-description">Streamlined processes for listings, offers, and closings with
+                        minimal manual intervention.</p>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="solution-icon"><i class="fas fa-database"></i></div>
+                    <h3 class="solution-title">Unified Property Database</h3>
+                    <p class="solution-description">Centralized system for all listings, client data, and documents with
+                        real-time sync.</p>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="solution-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <h3 class="solution-title">Market Intelligence</h3>
+                    <p class="solution-description">Real-time insights on pricing trends, inventory levels, and
+                        neighborhood analytics.</p>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="250">
+                    <div class="solution-icon"><i class="fas fa-robot"></i></div>
+                    <h3 class="solution-title">AI-Powered Matching</h3>
+                    <p class="solution-description">Smart property recommendations based on buyer preferences and search
+                        behavior.</p>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="solution-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 class="solution-title">Mobile Client Portal</h3>
+                    <p class="solution-description">Buyers and sellers can track progress, sign documents, and
+                        communicate anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="section testimonial-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-quote-left"></i>
+                    Testimonial
+                </div>
+                <h2 class="section-title" style="text-align: center;">Client Feedback</h2>
+            </div>
+
+            <div class="testimonial-card" data-aos="fade-up">
+                <p class="testimonial-text">
+                    "This real estate platform has <strong>revolutionized our property business</strong>. The
+                    <strong>automated
+                        listing management</strong> saves us hours each week, and our clients love the <strong>virtual
+                        tour features</strong>
+                    for remote property viewing. The implementation team provided exceptional support throughout our
+                    transition.
+                    Our sales have increased by 40% since implementation!"
+                </p>
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-author">— Real Estate Agency Director</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-card" data-aos="fade-up">
+                <h2 class="cta-title">Ready to Transform Your <span class="gradient-text">Real Estate</span> Business?
+                </h2>
+                <p class="cta-description">
+                    Let's discuss how we can build a custom property management solution that streamlines your
+                    operations and accelerates growth.
+                </p>
+                <a href="index.html#contact" class="cta-btn">
+                    Start Your Project
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">Codecrafters Lab</div>
+                <div class="footer-nav">
+                    <a href="index.html#services">Services</a>
+                    <a href="index.html#projects">Projects</a>
+                    <a href="index.html#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/kelvibarochiya/" target="_blank"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/thecodefreelancer/" target="_blank"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Codecrafters Lab. All rights reserved. Crafted with ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 950,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 65
+        });
+
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            const particleCount = 28;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+
+                const duration = Math.random() * 22 + 16;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${Math.random() * 12}s`;
+                particle.style.opacity = Math.random() * 0.5 + 0.35;
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Image data
+        const projectImages = [
+            { src: "./images/r-1.png", alt: "Dashboard" },
+            { src: "./images/r-2.png", alt: "Property Listings" },
+            { src: "./images/r-3.png", alt: "Property Details" },
+            { src: "./images/r-4.png", alt: "Search & Filters" },
+            { src: "./images/r-5.png", alt: "Virtual Tour" },
+            { src: "./images/r-6.png", alt: "Agent Portal" },
+            { src: "./images/r-7.png", alt: "Client Dashboard" },
+            { src: "./images/r-8.png", alt: "Analytics" },
+            { src: "./images/r-9.png", alt: "Document Management" },
+            { src: "./images/r-11.png", alt: "Transaction Tracker" },
+            { src: "./images/r-12.png", alt: "Market Insights" },
+            { src: "./images/r-13.png", alt: "Commission Calculator" },
+            { src: "./images/r-14.png", alt: "Lead Management" },
+            { src: "./images/r-15.png", alt: "Settings" },
+            { src: "./images/r-16.png", alt: "Reports" },
+            { src: "./images/r-17.png", alt: "Notifications" },
+            { src: "./images/r-18.png", alt: "Mobile View" }
+        ];
+
+        // Initialize carousel
+        const carouselInner = document.getElementById('carouselInner');
+        const thumbnailContainer = document.getElementById('thumbnailContainer');
+
+        projectImages.forEach((image, index) => {
+            const carouselItem = document.createElement('div');
+            carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+            carouselItem.innerHTML = `
+                <a href="${image.src}" data-lightbox="project-gallery" data-title="${image.alt}">
+                    <img src="${image.src}" class="d-block w-100" alt="${image.alt}">
+                </a>
+            `;
+            carouselInner.appendChild(carouselItem);
+
+            const thumbnail = document.createElement('div');
+            thumbnail.className = `thumbnail ${index === 0 ? 'active' : ''}`;
+            thumbnail.innerHTML = `<img src="${image.src}" alt="Thumbnail ${index + 1}">`;
+            thumbnail.addEventListener('click', () => {
+                const carousel = bootstrap.Carousel.getInstance(document.getElementById('projectSlider'));
+                carousel.to(index);
+                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                thumbnail.classList.add('active');
+            });
+            thumbnailContainer.appendChild(thumbnail);
+        });
+
+        document.getElementById('projectSlider').addEventListener('slid.bs.carousel', function () {
+            const activeIndex = [...document.querySelectorAll('.carousel-item')].findIndex(item => item.classList.contains('active'));
+            document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+                thumb.classList.toggle('active', index === activeIndex);
+            });
+
+            const activeThumb = document.querySelector('.thumbnail.active');
+            if (activeThumb) {
+                activeThumb.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
+            }
+        });
+
+        lightbox.option({ resizeDuration: 200, wrapAround: true, showImageNumberLabel: true });
+
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 650) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Parallax
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.project-hero');
+            if (hero) {
+                const heroContent = hero.querySelector('.hero-content');
+                if (heroContent && scrolled < window.innerHeight) {
+                    heroContent.style.transform = `translateY(${scrolled * 0.38}px)`;
+                    heroContent.style.opacity = 1 - (scrolled / window.innerHeight);
+                }
+            }
+        });
+
+        window.addEventListener('load', createParticles);
+    </script>
+</body>
+
+</html>
