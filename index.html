@@ -2056,15 +2056,39 @@
         });
 
         // Form submission
+       
         document.getElementById('contactForm').addEventListener('submit', function (e) {
             e.preventDefault();
+
             const btn = this.querySelector('.btn-submit');
             const originalContent = btn.innerHTML;
 
+            // Get form values
+            let name = this.querySelector("input[placeholder='John Doe']").value;
+            let email = this.querySelector("input[type='email']").value;
+            let phone = this.querySelector("input[type='tel']").value;
+            let projectType = this.querySelector("select").value;
+            let details = this.querySelector("textarea").value;
+
+            // Create WhatsApp message
+            let message = `New Contact Form Submission:%0A
+        Name: ${name}%0A
+        Email: ${email}%0A
+        Phone: ${phone}%0A
+        Project Type: ${projectType}%0A
+        Details: ${details}`;
+
+            let whatsappNumber = "918758979231";
+            let url = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+            // Button loading state
             btn.innerHTML = '<span>Sending...</span> <i class="fas fa-spinner fa-spin ms-2"></i>';
             btn.disabled = true;
 
             setTimeout(() => {
+                // Open WhatsApp
+                window.open(url, "_blank");
+
                 btn.innerHTML = '<span>Message Sent!</span> <i class="fas fa-check ms-2"></i>';
                 btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
 
@@ -2074,9 +2098,10 @@
                     btn.disabled = false;
                     this.reset();
                 }, 3000);
+
             }, 2000);
         });
-
+        
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
