@@ -1680,18 +1680,7 @@
                                     <input type="tel" class="form-control-custom" placeholder="+91 XXXXX XXXXX">
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Project Type *</label>
-                                    <select class="form-control-custom" required>
-                                        <option value="">Select a service</option>
-                                        <option value="web">Web Development</option>
-                                        <option value="mobile">Mobile App</option>
-                                        <option value="custom">Custom Solution</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
+
                         </div>
                         <div class="form-group">
                             <label class="form-label">Project Details *</label>
@@ -2056,7 +2045,7 @@
         });
 
         // Form submission
-       
+
         document.getElementById('contactForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -2067,7 +2056,7 @@
             let name = this.querySelector("input[placeholder='John Doe']").value;
             let email = this.querySelector("input[type='email']").value;
             let phone = this.querySelector("input[type='tel']").value;
-            let projectType = this.querySelector("select").value;
+
             let details = this.querySelector("textarea").value;
 
             // Create WhatsApp message
@@ -2075,10 +2064,9 @@
         Name: ${name}%0A
         Email: ${email}%0A
         Phone: ${phone}%0A
-        Project Type: ${projectType}%0A
         Details: ${details}`;
 
-            let whatsappNumber = "918758979231";
+            let whatsappNumber = "919624978161";
             let url = `https://wa.me/${whatsappNumber}?text=${message}`;
 
             // Button loading state
@@ -2101,7 +2089,7 @@
 
             }, 2000);
         });
-        
+
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
